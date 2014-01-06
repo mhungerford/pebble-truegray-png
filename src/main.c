@@ -66,6 +66,7 @@ static bool load_png_resource(int index) {
     image.width, image.height, image.bpp);
 
   psleep(1); // Avoid watchdog kill  
+
 }
 
 // This draws the gray image buffer struct to the screen framebuffer
@@ -148,6 +149,9 @@ static void window_unload(Window *window) {
 }
 
 static void init(void) {
+  //Keep the light running
+  light_enable(true);
+
   //Allocate 4-bit grayscale buffer
   APP_LOG(APP_LOG_LEVEL_DEBUG, "About to load initial resource.");
   image_index = 0;
@@ -169,6 +173,7 @@ static void init(void) {
 static void deinit(void) {
   window_destroy(gray_window);
   if (upng) upng_free(upng);
+  light_enable(false);
 }
 
 int main(void) {
