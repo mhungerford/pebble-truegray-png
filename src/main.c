@@ -108,7 +108,12 @@ static void register_timer(void* data) {
   // Always has a little flicker in direct sunlight
   // Causes watchdog timer reset if < 15ms
   app_timer_register(15, register_timer, data);
-  layer_mark_dirty(render_layer);
+  static int wait_on_start = 25;
+  if(wait_on_start > 0){
+    wait_on_start--;
+  } else {
+    layer_mark_dirty(render_layer);
+  }
 }
 
 
